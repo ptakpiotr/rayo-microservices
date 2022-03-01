@@ -12,8 +12,8 @@ using RayoAuth.Data;
 namespace RayoAuth.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220224180406_StandingsFinalMigration")]
-    partial class StandingsFinalMigration
+    [Migration("20220301125000_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -228,12 +228,6 @@ namespace RayoAuth.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("LastUpdated")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -296,15 +290,6 @@ namespace RayoAuth.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<long>("Draw")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GoalDifference")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GoalsAgainst")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GoalsFor")
                         .HasColumnType("bigint");
 
                     b.Property<long>("Lost")

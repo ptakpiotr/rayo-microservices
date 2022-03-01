@@ -7,7 +7,8 @@ namespace RayoInfo.Profiles
         public MainProfile()
         {
             CreateMap<CommentCreateDTO, CommentModel>().ForMember(dest=>dest.Likes,opts=>opts.MapFrom(src=>0))
-                    .ForMember(dest=>dest.Dislikes,opts=>opts.MapFrom(src=>0));
+                    .ForMember(dest=>dest.Dislikes,opts=>opts.MapFrom(src=>0))
+                    .ForMember(dest=>dest.NewsId,opts=>opts.MapFrom(src=>int.Parse(src.NewsId)));
             CreateMap<CommentModifyDTO, CommentModel>().ForMember(dest => dest.Id, opts => opts.Ignore());
             
 

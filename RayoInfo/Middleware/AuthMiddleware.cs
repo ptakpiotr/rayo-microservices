@@ -16,7 +16,8 @@
                 string reqString = context.Request.QueryString.Value;
                 if (reqString.Contains("id"))
                 {
-                    string token = reqString.Substring(reqString.IndexOf("=") + 1);
+                    context.Request.Headers.Remove("Authorization");
+                    string token = reqString.Substring(reqString.LastIndexOf("=") + 1);
                     context.Request.Headers.Add("Authorization", $"Bearer {token}");
                 }
             }

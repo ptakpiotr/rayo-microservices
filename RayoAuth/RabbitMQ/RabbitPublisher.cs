@@ -16,8 +16,7 @@ namespace RayoAuth.RabbitMQ
 
             var factory = new ConnectionFactory()
             {
-                HostName = configuration["Rabbit:Host"],
-                Port = int.Parse(configuration["Rabbit:Port"])
+                Uri=new Uri(configuration["Rabbit:Uri"])
             };
 
             try

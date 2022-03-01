@@ -14,7 +14,7 @@ namespace RayoInfo.RabbitMQ
 
         public AppDbContext _ctx { get; }
 
-        public EventSubscriber(IConfiguration config,ILogger<EventSubscriber> logger,IDbContextFactory<AppDbContext> ctx)
+        public EventSubscriber(IConfiguration config, ILogger<EventSubscriber> logger, IDbContextFactory<AppDbContext> ctx)
         {
             _logger = logger;
             _ctx = ctx.CreateDbContext();
@@ -22,8 +22,8 @@ namespace RayoInfo.RabbitMQ
             {
                 var factory = new ConnectionFactory()
                 {
-                    HostName = config["Rabbit:Host"],
-                    Port = int.Parse(config["Rabbit:Port"])
+                    Uri = new Uri(config["Rabbit:Uri"])
+
                 };
 
                 _connection = factory.CreateConnection();
@@ -33,7 +33,8 @@ namespace RayoInfo.RabbitMQ
                 _channel.ExchangeDeclare(config["Rabbit:Exchange"], ExchangeType.Fanout, true);
                 _queueName = _channel.QueueDeclare().QueueName;
                 _channel.QueueBind(_queueName, config["Rabbit:Exchange"], "");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
             }
@@ -49,7 +50,8 @@ namespace RayoInfo.RabbitMQ
                 consumer.Received += Consumer_Received;
 
                 _channel.BasicConsume(_queueName, true, consumer);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
             }
@@ -60,9 +62,6 @@ namespace RayoInfo.RabbitMQ
         private void Consumer_Received(object sender, BasicDeliverEventArgs e)
         {
             StandingsModel data = JsonSerializer.Deserialize<StandingsModel>(e.Body.ToArray());
-            var oldData = _ctx.Standings.ToList();
-            _ctx.Standings.RemoveRange(oldData);
-            _ctx.SaveChanges();
 
             _ctx.Standings.Add(data);
             _ctx.SaveChanges();

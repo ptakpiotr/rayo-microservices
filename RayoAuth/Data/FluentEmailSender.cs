@@ -1,6 +1,7 @@
 ﻿using FluentEmail.Core;
 using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Net;
 using System.Net.Mail;
 
 namespace RayoAuth.Data
@@ -12,11 +13,11 @@ namespace RayoAuth.Data
         public FluentEmailSender(IConfiguration config)
         {
             _config = config;
-            SmtpSender sender = new(new SmtpClient(_config["Mailing:Provider"])
+            SmtpSender sender = new(new SmtpClient("smtp.ethereal.email")
             {
-                EnableSsl = false,
-                DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
-                PickupDirectoryLocation = @"C:\Users\piter\Documents\Mails"
+                EnableSsl = true,
+                Port=587,
+                Credentials= new NetworkCredential(config["Mailing:Email"],config["Mailing:Password"])
             });
 
             Email.DefaultSender = sender;

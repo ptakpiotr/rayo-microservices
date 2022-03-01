@@ -41,7 +41,7 @@ services.AddCors((opts) =>
 {
     opts.AddPolicy("AllowAnyonePolicy", policyOpts =>
     {
-        policyOpts.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:3000");
+        policyOpts.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("https://rayofansite.netlify.app/", "http://localhost:3000");
     });
 });
 

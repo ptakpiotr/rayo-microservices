@@ -12,7 +12,7 @@ using RayoInfo.Data;
 namespace RayoInfo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220224190221_InitialMigration")]
+    [Migration("20220301130151_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
